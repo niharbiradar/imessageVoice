@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Vibes - AI Voice Challenges</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #45b7d1 100%);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .bounce-in {
+            animation: bounceIn 0.6s ease-out;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .trending-gradient {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Header -->
+    <header class="glass-effect p-4">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                    <i class="fas fa-microphone text-pink-500 text-xl"></i>
+                </div>
+                <h1 class="text-white text-xl font-bold">Voice Vibes</h1>
+            </div>
+            <div class="flex space-x-3">
+                <button class="text-white hover:text-pink-200 transition-colors">
+                    <i class="fab fa-tiktok text-xl"></i>
+                </button>
+                <button class="text-white hover:text-pink-200 transition-colors">
+                    <i class="fab fa-instagram text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto p-4 space-y-6">
+        <!-- Hero Section -->
+        <div class="glass-effect rounded-2xl p-6 text-center">
+            <h2 class="text-white text-3xl font-bold mb-2">Create Viral Voice Challenges</h2>
+            <p class="text-white mb-6">Turn any text into AI voices perfect for TikTok, Instagram, and more!</p>
+            <div class="flex justify-center space-x-4">
+                <button class="bg-white text-pink-500 px-6 py-3 rounded-full font-semibold hover:bg-pink-50 transition-colors" onclick="showChallengeGenerator()">
+                    <i class="fas fa-magic mr-2"></i>Create Challenge
+                </button>
+                <button class="border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-pink-500 transition-colors" onclick="showTrendingPhrases()">
+                    <i class="fas fa-fire mr-2"></i>Trending
+                </button>
+            </div>
+        </div>
+
+        <!-- Challenge Generator -->
+        <div id="challengeGenerator" class="glass-effect rounded-2xl p-6" style="display: none;">
+            <h3 class="text-white text-xl font-semibold mb-4">🎤 Voice Challenge Generator</h3>
+            <div class="space-y-4">
+                <div class="bg-white bg-opacity-10 rounded-xl p-4">
+                    <label class="text-white text-sm mb-2 block">Your Challenge Text:</label>
+                    <textarea id="challengeText" placeholder="Type your viral challenge here..." 
+                              class="w-full bg-white bg-opacity-20 rounded-lg px-4 py-3 text-white placeholder-white placeholder-opacity-70 focus:outline-none focus:ring-2 focus:ring-white resize-none"
+                              rows="3">Hey besties! What's your vibe today? Drop a 💯 if you're feeling this energy!</textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-white text-sm mb-2 block">Choose Voice:</label>
+                        <select id="voiceSelector" class="w-full bg-white bg-opacity-20 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-white">
+                            <option value="">Loading voices...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-white text-sm mb-2 block">Challenge Type:</label>
+                        <select id="challengeType" class="w-full bg-white bg-opacity-20 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-white">
+                            <option value="tiktok">TikTok Challenge</option>
+                            <option value="instagram">Instagram Reel</option>
+                            <option value="meme">Viral Meme</option>
+                            <option value="trending">Trending Phrase</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-3 rounded-full font-semibold hover:from-pink-600 hover:to-purple-600 transition-all transform hover:scale-105">
+                    <i class="fas fa-magic mr-2"></i>Generate Voice Challenge
+                </button>
+            </div>
+        </div>
+
+        <!-- Trending Phrases -->
+        <div id="trendingSection" class="glass-effect rounded-2xl p-6" style="display: none;">
+            <h3 class="text-white text-xl font-semibold mb-4">🔥 Trending Phrases</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white bg-opacity-10 rounded-xl p-4 cursor-pointer hover:bg-opacity-20 transition-colors" onclick="useTrendingPhrase('Periodt! That\'s the tea! ☕️')">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-fire text-white text-sm"></i>
+                        </div>
+                        <p class="text-white font-semibold">Periodt! That's the tea! ☕️</p>
+                    </div>
+                </div>
+                <div class="bg-white bg-opacity-10 rounded-xl p-4 cursor-pointer hover:bg-opacity-20 transition-colors" onclick="useTrendingPhrase('No cap, this is literally me rn 😭')">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-fire text-white text-sm"></i>
+                        </div>
+                        <p class="text-white font-semibold">No cap, this is literally me rn 😭</p>
+                    </div>
+                </div>
+                <div class="bg-white bg-opacity-10 rounded-xl p-4 cursor-pointer hover:bg-opacity-20 transition-colors" onclick="useTrendingPhrase('Slay bestie! You ate that! 💅')">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-fire text-white text-sm"></i>
+                        </div>
+                        <p class="text-white font-semibold">Slay bestie! You ate that! 💅</p>
+                    </div>
+                </div>
+                <div class="bg-white bg-opacity-10 rounded-xl p-4 cursor-pointer hover:bg-opacity-20 transition-colors" onclick="useTrendingPhrase('This is giving... main character energy ✨')">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-fire text-white text-sm"></i>
+                        </div>
+                        <p class="text-white font-semibold">This is giving... main character energy ✨</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Generated Content -->
+        <div id="generatedContent" class="glass-effect rounded-2xl p-6" style="display: none;">
+            <h3 class="text-white text-xl font-semibold mb-4">🎵 Your Voice Challenge</h3>
+            <div class="space-y-4">
+                <div class="bg-white bg-opacity-10 rounded-xl p-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-white font-semibold">Generated Audio:</span>
+                        <span class="text-white text-sm" id="voiceName">Voice Name</span>
+                    </div>
+                    <audio id="generatedAudio" controls class="w-full" style="display: none;"></audio>
+                    <div id="loadingAudio" class="text-center py-8">
+                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+                        <p class="text-white mt-2">Generating your voice challenge...</p>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-3">
+                    <button id="downloadBtn" class="flex-1 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full transition-colors" style="display: none;">
+                        <i class="fas fa-download mr-2"></i>Download
+                    </button>
+                    <button id="shareBtn" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition-colors" style="display: none;">
+                        <i class="fas fa-share mr-2"></i>Share
+                    </button>
+                    <button id="remixBtn" class="flex-1 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-full transition-colors" style="display: none;">
+                        <i class="fas fa-magic mr-2"></i>Remix
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voice Gallery -->
+        <div class="glass-effect rounded-2xl p-6">
+            <h3 class="text-white text-xl font-semibold mb-4">🎭 Available Voices</h3>
+            <div id="voiceGallery" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Voices will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Social Stats -->
+        <div class="glass-effect rounded-2xl p-6">
+            <h3 class="text-white text-xl font-semibold mb-4">📊 Your Stats</h3>
+            <div class="grid grid-cols-3 gap-4 text-center">
+                <div>
+                    <div class="text-white text-2xl font-bold" id="challengesCreated">0</div>
+                    <div class="text-white text-sm">Challenges Created</div>
+                </div>
+                <div>
+                    <div class="text-white text-2xl font-bold" id="voicesUsed">0</div>
+                    <div class="text-white text-sm">Voices Used</div>
+                </div>
+                <div>
+                    <div class="text-white text-2xl font-bold" id="downloads">0</div>
+                    <div class="text-white text-sm">Downloads</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Action Button -->
+    <div class="fixed bottom-6 right-6">
+        <button id="floatingBtn" class="bg-white text-pink-500 w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-pink-50 transition-colors pulse-animation">
+            <i class="fas fa-magic text-2xl"></i>
+        </button>
+    </div>
+
+    <script>
+        // Global variables
+        let voices = [];
+        let challengesCreated = 0;
+        let voicesUsed = 0;
+        let downloads = 0;
+
+        // API base URL
+        const API_BASE = 'http://localhost:3000/api';
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadVoices();
+            setupEventListeners();
+            updateStats();
+        });
+
+        function setupEventListeners() {
+            // Generate button
+            const generateBtn = document.getElementById('generateBtn');
+            generateBtn.addEventListener('click', generateVoiceChallenge);
+
+            // Floating button
+            const floatingBtn = document.getElementById('floatingBtn');
+            floatingBtn.addEventListener('click', showChallengeGenerator);
+        }
+
+        function showChallengeGenerator() {
+            document.getElementById('challengeGenerator').style.display = 'block';
+            document.getElementById('trendingSection').style.display = 'none';
+            document.getElementById('generatedContent').style.display = 'none';
+        }
+
+        function showTrendingPhrases() {
+            document.getElementById('challengeGenerator').style.display = 'none';
+            document.getElementById('trendingSection').style.display = 'block';
+            document.getElementById('generatedContent').style.display = 'none';
+        }
+
+        function useTrendingPhrase(phrase) {
+            document.getElementById('challengeText').value = phrase;
+            showChallengeGenerator();
+        }
+
+        async function loadVoices() {
+            try {
+                const response = await fetch(`${API_BASE}/voices`);
+                if (response.ok) {
+                    voices = await response.json();
+                    updateVoiceSelector();
+                    updateVoiceGallery();
+                }
+            } catch (error) {
+                console.error('Error loading voices:', error);
+            }
+        }
+
+        function updateVoiceSelector() {
+            const selector = document.getElementById('voiceSelector');
+            selector.innerHTML = '<option value="">Choose a voice...</option>';
+            
+            voices.forEach(voice => {
+                const option = document.createElement('option');
+                option.value = voice.id;
+                option.textContent = voice.name;
+                selector.appendChild(option);
+            });
+        }
+
+        function updateVoiceGallery() {
+            const gallery = document.getElementById('voiceGallery');
+            gallery.innerHTML = '';
+
+            voices.forEach(voice => {
+                const voiceCard = document.createElement('div');
+                voiceCard.className = 'bg-white bg-opacity-10 rounded-xl p-4 border border-white border-opacity-20 hover:bg-opacity-20 transition-colors cursor-pointer';
+                voiceCard.innerHTML = `
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-microphone text-white"></i>
+                        </div>
+                        <h4 class="text-white font-semibold">${voice.name}</h4>
+                        <p class="text-white text-sm opacity-70">${voice.description}</p>
+                        <button onclick="testVoice('${voice.id}')" class="mt-2 bg-white bg-opacity-20 text-white px-3 py-1 rounded-full text-sm hover:bg-opacity-30 transition-colors">
+                            <i class="fas fa-play mr-1"></i>Test
+                        </button>
+                    </div>
+                `;
+                gallery.appendChild(voiceCard);
+            });
+        }
+
+        async function generateVoiceChallenge() {
+            const text = document.getElementById('challengeText').value.trim();
+            const voiceId = document.getElementById('voiceSelector').value;
+            const challengeType = document.getElementById('challengeType').value;
+
+            if (!text || !voiceId) {
+                alert('Please enter text and select a voice!');
+                return;
+            }
+
+            // Show generated content section
+            document.getElementById('generatedContent').style.display = 'block';
+            document.getElementById('loadingAudio').style.display = 'block';
+            document.getElementById('generatedAudio').style.display = 'none';
+            document.getElementById('downloadBtn').style.display = 'none';
+            document.getElementById('shareBtn').style.display = 'none';
+            document.getElementById('remixBtn').style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_BASE}/tts`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        text: text,
+                        voice_id: voiceId
+                    })
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    
+                    // Update voice name
+                    const voice = voices.find(v => v.id === voiceId);
+                    document.getElementById('voiceName').textContent = voice ? voice.name : 'Unknown Voice';
+                    
+                    // Play audio
+                    const audio = document.getElementById('generatedAudio');
+                    audio.src = result.audio_url;
+                    audio.style.display = 'block';
+                    
+                    // Show controls
+                    document.getElementById('loadingAudio').style.display = 'none';
+                    document.getElementById('downloadBtn').style.display = 'block';
+                    document.getElementById('shareBtn').style.display = 'block';
+                    document.getElementById('remixBtn').style.display = 'block';
+                    
+                    // Update stats
+                    challengesCreated++;
+                    voicesUsed++;
+                    updateStats();
+                    
+                    // Add bounce animation
+                    document.getElementById('generatedContent').classList.add('bounce-in');
+                } else {
+                    const error = await response.json();
+                    alert('Error generating voice: ' + error.error);
+                }
+            } catch (error) {
+                console.error('Error generating voice:', error);
+                alert('Error generating voice. Please try again.');
+            }
+        }
+
+        function testVoice(voiceId) {
+            const sampleText = "Hey besties! This is a test of my voice. How do I sound?";
+            sendMessageWithVoice(sampleText, voiceId);
+        }
+
+        async function sendMessageWithVoice(text, voiceId) {
+            try {
+                const response = await fetch(`${API_BASE}/tts`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        text: text,
+                        voice_id: voiceId
+                    })
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    playAudio(result.audio_url);
+                }
+            } catch (error) {
+                console.error('Error playing voice:', error);
+            }
+        }
+
+        function playAudio(audioUrl) {
+            const audio = new Audio(audioUrl);
+            audio.play();
+        }
+
+        function updateStats() {
+            document.getElementById('challengesCreated').textContent = challengesCreated;
+            document.getElementById('voicesUsed').textContent = voicesUsed;
+            document.getElementById('downloads').textContent = downloads;
+        }
+
+        // Download functionality
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            const audio = document.getElementById('generatedAudio');
+            if (audio.src) {
+                const link = document.createElement('a');
+                link.href = audio.src;
+                link.download = 'voice-challenge.mp3';
+                link.click();
+                downloads++;
+                updateStats();
+            }
+        });
+
+        // Share functionality
+        document.getElementById('shareBtn').addEventListener('click', function() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Check out my AI voice challenge!',
+                    text: 'I just created this with Voice Vibes!',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(window.location.href);
+                alert('Link copied to clipboard!');
+            }
+        });
+
+        // Remix functionality
+        document.getElementById('remixBtn').addEventListener('click', function() {
+            showChallengeGenerator();
+        });
+    </script>
+</body>
+</html> 
